@@ -2,21 +2,13 @@
 	import { getCarsPaged, getMaxPages } from '$lib/api/cars.remote';
 	import { DEFAULT_LANG, TEXTS } from '$lib/lang/texts';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
+	import Pagination from './Pagination.svelte';
 
 	const currentPage = $derived(parseInt(page.url.searchParams.get('page') ?? '0'));
 	const cars = $derived(await getCarsPaged(currentPage));
-	const maxPages = $derived(await getMaxPages());
-
-	const handlePrevious = () => {
-		goto(`?page=${currentPage - 1}`);
-	};
-	const handleNext = () => {
-		goto(`?page=${currentPage + 1}`);
-	};
 </script>
 
-{@render navigationButtons()}
+<Pagination/>
 
 <ul class="grid gap-4">
 	{#each cars as car}
@@ -34,22 +26,10 @@
 					<span>{TEXTS[DEFAULT_LANG].model.cars.power}</span>
 					<span>{car.power}</span>
 				</p>
+				<img src={`/assets/${car.id}.png`} alt="image">
 			</a>
 		</li>
 	{/each}
 </ul>
 
-{@render navigationButtons()}
-
-{#snippet navigationButtons()}
-<div class="flex justify-between">
-	{#if currentPage > 0}
-		<button onclick={handlePrevious}>Previous</button>
-	{:else}
-		<div></div>
-	{/if}
-	{#if currentPage < maxPages - 1}
-		<button onclick={handleNext}>Next</button>
-	{/if}
-</div>
-{/snippet}
+<Pagination/>

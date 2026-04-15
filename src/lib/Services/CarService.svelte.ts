@@ -43,6 +43,10 @@ class CarService implements ICarService {
 				{
 					text: TEXTS[DEFAULT_LANG].model.cars.power,
 					inputAttributes: createCar.fields.power.as('number')
+				},
+				{
+					text: TEXTS[DEFAULT_LANG].model.cars.image,
+					inputAttributes: createCar.fields.image.as('file')
 				}
 			],
 			submitText: TEXTS[DEFAULT_LANG].form.submitCreate

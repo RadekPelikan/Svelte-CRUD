@@ -41,9 +41,4 @@
 				{/each}
 			</ul>
 		</nav>
-		<p>AHooooooj</p>
-		<p>AHooooooj</p>
-		<p>AHooooooj</p>
-		<p>AHooooooj</p>
-	</div>
 </header>

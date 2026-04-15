@@ -3,9 +3,11 @@
 
 
 	const { remoteCb, fields, submitText, form }: UpsertFormProps = $props();
+
+	const hasFileInput = $derived(fields.some((f) => f.inputAttributes?.type === 'file'));
 </script>
 
-<form {...remoteCb} class="grid max-w-80">
+<form {...remoteCb} enctype={hasFileInput ? 'multipart/form-data' : undefined} class="grid max-w-80">
 	{#each fields as field}
 		<label class="grid">
 			{field.text}

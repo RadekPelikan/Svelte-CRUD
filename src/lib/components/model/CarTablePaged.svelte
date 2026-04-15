@@ -2,31 +2,14 @@
 	import { getCarsPaged, getMaxPages } from '$lib/api/cars.remote';
 	import { DEFAULT_LANG, TEXTS } from '$lib/lang/texts';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
+	import Pagination from './Pagination.svelte';
 
 	const currentPage = $derived(parseInt(page.url.searchParams.get('page') ?? '0'));
 	const cars = $derived(await getCarsPaged(currentPage));
-	const maxPages = $derived(await getMaxPages());
 
-	const handlePrevious = () => {
-		goto(`?page=${currentPage - 1}`);
-	};
-	const handleNext = () => {
-		goto(`?page=${currentPage + 1}`);
-	};
 </script>
 
-<div class="flex justify-between">
-	{#if currentPage > 0}
-		<button onclick={handlePrevious}>Previous</button>
-	{:else}
-		<div></div>
-	{/if}
-	{#if currentPage < maxPages}
-		<button onclick={handleNext}>Next</button>
-	{/if}
-</div>
-
+<Pagination/>
 
 <table class="w-full border-collapse">
 	<thead>
@@ -47,13 +30,4 @@
 	</tbody>
 </table>
 
-<div class="flex justify-between">
-	{#if currentPage > 0}
-		<button onclick={handlePrevious}>Previous</button>
-	{:else}
-		<div></div>
-	{/if}
-	{#if currentPage < maxPages}
-		<button onclick={handleNext}>Next</button>
-	{/if}
-</div>
+<Pagination/>
