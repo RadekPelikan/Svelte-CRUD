@@ -5,7 +5,7 @@
 
 	let value = $state<'list' | 'table'>('list');
 
-	$inspect(value);
+	// $inspect(value);
 </script>
 
 <main>

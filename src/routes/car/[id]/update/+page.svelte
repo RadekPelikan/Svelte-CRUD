@@ -6,7 +6,6 @@
 	const { params } = $props();
 
 	let carService = getCarService();
-	$inspect(carService)
 
 	let createFormProps = $derived(await carService.GetUpdateForm(params.id as UUID));
 </script>

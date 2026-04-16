@@ -18,7 +18,7 @@ export const getCars = query(async () => {
 	return allCars;
 });
 
-const PAGE_SIZE = 1000;
+const PAGE_SIZE = 20;
 export const getCarsPaged = query(v.pipe(v.number(), v.integer(), v.minValue(0)), async (page) => {
 	const cars = await db
 		.select()

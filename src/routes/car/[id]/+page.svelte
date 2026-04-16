@@ -6,7 +6,6 @@
 
 	const car = $derived(await getCar(params.id));
 
-	$inspect(car);
 </script>
 
 <main>

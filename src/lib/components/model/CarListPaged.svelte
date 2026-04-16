@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { getCarsPaged, getMaxPages } from '$lib/api/cars.remote';
 	import { DEFAULT_LANG, TEXTS } from '$lib/lang/texts';
-	import { page } from '$app/state';
 	import Pagination from './Pagination.svelte';
+	import { PaginationService } from '$lib/Services/PaginationService.svelte';
+	import { getCarService } from '$lib/Services/CarService.svelte';
 
-	const currentPage = $derived(parseInt(page.url.searchParams.get('page') ?? '0'));
-	const cars = $derived(await getCarsPaged(currentPage));
+	const pagination = await PaginationService.initAsync(getCarService())
+	// const pagination = PaginationService.init()
 </script>
 
-<Pagination/>
+<Pagination />
 
 <ul class="grid gap-4">
-	{#each cars as car}
+	{#each pagination.items as car}
 		<li class="max-w-60 rounded bg-violet-900 hover:brightness-90">
 			<a href={`/car/${car.id}`}>
 				<p>
@@ -26,10 +26,10 @@
 					<span>{TEXTS[DEFAULT_LANG].model.cars.power}</span>
 					<span>{car.power}</span>
 				</p>
-				<img src={`/assets/${car.id}.png`} alt="image">
+				<!-- <img src={`/assets/${car.id}.png`} alt="image"> -->
 			</a>
 		</li>
 	{/each}
 </ul>
 
-<Pagination/>
+<Pagination />

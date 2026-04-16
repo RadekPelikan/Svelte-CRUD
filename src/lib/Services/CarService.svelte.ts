@@ -1,4 +1,4 @@
-import { getCar, createCar, updateCar, getCars } from '$lib/api/cars.remote';
+import { getCar, getMaxPages, createCar, updateCar, getCars, getCarsPaged } from '$lib/api/cars.remote';
 import { DEFAULT_LANG, TEXTS } from '$lib/lang/texts';
 import type { Car } from '$lib/server/db/schema';
 import type { UpsertFormProps } from '$lib/types/Props';
@@ -7,7 +7,8 @@ import type { UUID } from 'crypto';
 import { getContext, setContext } from 'svelte';
 
 
-export interface ICarService extends IModelService<Car> {}
+export interface ICarService extends IModelService<Car> {
+}
 
 class CarService implements ICarService {
 
@@ -23,9 +24,15 @@ class CarService implements ICarService {
 	}
 	
 	async GetAll(): Promise<Car[]> {
-		const car = await getCars();
+		return await getCars();
+	}
 
-		return car;
+	async getPaged(page: number): Promise<Car[]> {
+		return await getCarsPaged(page);
+	}
+
+	async getMaxPages(): Promise<number> {
+		return await getMaxPages();
 	}
 
 	GetCreateForm(): UpsertFormProps {

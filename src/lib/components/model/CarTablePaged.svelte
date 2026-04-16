@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { getCarsPaged, getMaxPages } from '$lib/api/cars.remote';
 	import { DEFAULT_LANG, TEXTS } from '$lib/lang/texts';
-	import { page } from '$app/state';
 	import Pagination from './Pagination.svelte';
+	import { PaginationService } from '$lib/Services/PaginationService.svelte';
+	import { getCarService } from '$lib/Services/CarService.svelte';
 
-	const currentPage = $derived(parseInt(page.url.searchParams.get('page') ?? '0'));
-	const cars = $derived(await getCarsPaged(currentPage));
-
+	const pagination = await PaginationService.initAsync(getCarService())
+	// const pagination = PaginationService.init()
 </script>
 
 <Pagination/>
@@ -20,7 +19,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each cars as car}
+		{#each pagination.items as car}
 			<tr class="bg-violet-900 hover:brightness-90">
 				<td class="p-2"><a href={`/car/${car.id}`}>{car.name}</a></td>
 				<td class="p-2"><a href={`/car/${car.id}`}>{car.brand}</a></td>
